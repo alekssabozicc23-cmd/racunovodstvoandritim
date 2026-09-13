@@ -85,6 +85,12 @@ let webpackConfig = {
     },
     configure: (webpackConfig) => {
 
+      // Remove ForkTsCheckerWebpackPlugin - not needed (no TypeScript in this project)
+      // and causes an ajv/ajv-keywords version conflict during build
+      webpackConfig.plugins = webpackConfig.plugins.filter(
+        (plugin) => plugin.constructor.name !== "ForkTsCheckerWebpackPlugin"
+      );
+
       // Add ignored patterns to reduce watched directories
         webpackConfig.watchOptions = {
           ...webpackConfig.watchOptions,
